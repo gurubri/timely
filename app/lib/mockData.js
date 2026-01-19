@@ -6,16 +6,16 @@ export const mockUserData = {
   freeTimeHours: 6, // 6 hours of free time
 };
 
-// Activity color palette
+// Activity color palette with dark mode support
 export const activityColors = {
-  workout: "bg-blue-500",
-  reading: "bg-purple-500",
-  prayer: "bg-green-500",
-  meditation: "bg-orange-500",
-  family: "bg-pink-500",
-  hobby: "bg-teal-500",
-  rest: "bg-amber-500",
-  learning: "bg-indigo-500",
+  workout: "bg-blue-500 dark:bg-blue-600",
+  reading: "bg-purple-500 dark:bg-purple-600",
+  prayer: "bg-green-500 dark:bg-green-600",
+  meditation: "bg-orange-500 dark:bg-orange-600",
+  family: "bg-pink-500 dark:bg-pink-600",
+  hobby: "bg-teal-500 dark:bg-teal-600",
+  rest: "bg-amber-500 dark:bg-amber-600",
+  learning: "bg-indigo-500 dark:bg-indigo-600",
 };
 
 // Activities for the day

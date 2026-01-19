@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
+import { useSidebar } from "@/app/context/SidebarContext";
 
 export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(true);
+  const { isOpen, toggleSidebar } = useSidebar();
 
   const navigationItems = [
     {
@@ -56,7 +56,7 @@ export default function Sidebar() {
             </h1>
           )}
           <button
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={toggleSidebar}
             className="p-2 hover:bg-gray-100 dark:hover:bg-neutral-900 rounded-lg transition-colors"
             aria-label="Toggle sidebar"
           >
@@ -112,7 +112,7 @@ export default function Sidebar() {
 
       {/* Mobile Toggle Button */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={toggleSidebar}
         className="fixed bottom-6 right-6 md:hidden p-3 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 transition-colors z-40"
         aria-label="Toggle sidebar"
       >

@@ -1,13 +1,28 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import WelcomeCard from "./WelcomeCard";
 import VerticalTimeline from "./VerticalTimeline";
 import ActivityBlocks from "./ActivityBlocks";
 import ActivityCard from "./ActivityCard";
+import ProgressTracker from "./ProgressTracker";
 import { calculateActivityTimings } from "@/app/lib/mockData";
 
 export default function Dashboard() {
   const activities = calculateActivityTimings();
+  const [userActivities, setUserActivities] = useState([]);
+
+  useEffect(() => {
+    // Load user activities from localStorage
+    const stored = localStorage.getItem("timely_activities");
+    if (stored) {
+      try {
+        setUserActivities(JSON.parse(stored));
+      } catch (e) {
+        console.error("Failed to parse activities", e);
+      }
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-white dark:bg-black p-4 sm:p-6">
@@ -22,6 +37,11 @@ export default function Dashboard() {
 
           {/* Activity Blocks */}
           <ActivityBlocks />
+        </div>
+
+        {/* Progress Tracking Section */}
+        <div className="mb-8">
+          <ProgressTracker activities={userActivities} />
         </div>
 
         {/* Activity Cards Section */}

@@ -8,41 +8,41 @@ export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState("light");
   const [mounted, setMounted] = useState(false);
 
-  const applyTheme = (newTheme) => {
-    if (newTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  };
-
   useEffect(() => {
-    setMounted(true);
     // Get theme from localStorage or system preference
     const savedTheme = localStorage.getItem("theme");
+    let initialTheme = "light";
+
     if (savedTheme) {
-      setTheme(savedTheme);
-      applyTheme(savedTheme);
+      initialTheme = savedTheme;
     } else {
       // Check system preference
       const prefersDark = window.matchMedia(
         "(prefers-color-scheme: dark)",
       ).matches;
-      const initialTheme = prefersDark ? "dark" : "light";
-      setTheme(initialTheme);
-      applyTheme(initialTheme);
+      initialTheme = prefersDark ? "dark" : "light";
     }
+
+    setTheme(initialTheme);
+    applyTheme(initialTheme);
+    setMounted(true);
   }, []);
 
-  useEffect(() => {
-    // Apply theme whenever it changes
-    applyTheme(theme);
-  }, [theme]);
+  const applyTheme = (newTheme) => {
+    if (newTheme === "dark") {
+      document.documentElement.classList.add("dark");
+      document.documentElement.style.colorScheme = "dark";
+    } else {
+      document.documentElement.classList.remove("dark");
+      document.documentElement.style.colorScheme = "light";
+    }
+  };
 
   const toggleTheme = () => {
     setTheme((prevTheme) => {
       const newTheme = prevTheme === "light" ? "dark" : "light";
       localStorage.setItem("theme", newTheme);
+      applyTheme(newTheme);
       return newTheme;
     });
   };

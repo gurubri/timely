@@ -6,6 +6,7 @@ import Link from "next/link";
 import AppLayout from "@/app/components/AppLayout";
 import TimeTracker from "@/app/components/TimeTracker";
 import ProgressTracker from "@/app/components/ProgressTracker";
+import ActivityScheduleCard from "@/app/components/ActivityScheduleCard";
 import { getTodayActivityTime, getActivityGoals } from "@/app/lib/timeTracking";
 
 export default function ActivityDetailPage({ params }) {
@@ -21,7 +22,9 @@ export default function ActivityDetailPage({ params }) {
     if (stored) {
       try {
         const activities = JSON.parse(stored);
-        const found = activities.find((a) => a.id === id);
+        // Convert id to number since it comes as string from URL
+        const numericId = parseInt(id, 10);
+        const found = activities.find((a) => a.id === numericId);
         setActivity(found);
 
         // Load today's hours and goals
@@ -152,6 +155,9 @@ export default function ActivityDetailPage({ params }) {
               </div>
             </div>
           </div>
+
+          {/* Schedule and Progress Card */}
+          <ActivityScheduleCard activity={activity} />
 
           {/* Time Tracker */}
           <div className="mb-8">
